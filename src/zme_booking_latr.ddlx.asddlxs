@@ -45,7 +45,7 @@ annotate view ZC_BOOKING_LATR with
   identification: [ { position: 60 } ] }
   @Consumption.valueHelpDefinition: [ {entity: {name: '/DMO/I_Flight', element: 'ConnectionID'},
   additionalBinding: [ { localElement: 'FlightDate', element: 'FlightDate'},
-  { localElement: 'CarrierID', element: 'AirlineID'},
+  { localElement: 'CarrierId', element: 'AirlineID'},
   { localElement: 'FlightPrice', element: 'Price'},
   { localElement: 'CurrencyCode', element: 'CurrencyCode' } ] } ]
   ConnectionId;
@@ -53,7 +53,7 @@ annotate view ZC_BOOKING_LATR with
   identification: [ { position: 70 } ] }
   @Consumption.valueHelpDefinition: [ {entity: {name: '/DMO/I_Flight', element: 'FlightDate' },
   additionalBinding: [ { localElement: 'ConnectionID', element: 'ConnectionID'},
-  { localElement: 'CarrierID', element: 'AirlineID'},
+  { localElement: 'CarrierId', element: 'AirlineID'},
   { localElement: 'FlightPrice', element: 'Price' },
   { localElement: 'CurrencyCode', element: 'CurrencyCode' }]}]
   FlightDate;

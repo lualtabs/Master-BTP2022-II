@@ -65,11 +65,16 @@ annotate view ZC_TRAVEL_LATR with
   lineItem: [ { position: 50, importance: #HIGH },
   { type: #FOR_ACTION, dataAction: 'createTravelByTemplate', label: 'Create Travel by Template' } ],
   identification: [ { position: 45, label: 'Status [O(Open)|A(Accepted)|X(Canceled)]' } ] }
-  travelstatus;
+  //  travelstatus;
+  OverallStatus;
   @UI: {
   identification:[ { position: 46 } ] }
   Description;
   @UI.hidden: true
   LastChangedAt;
 
+  @UI: {
+  lineItem: [ { position: 60, importance: #HIGH } ] }
+  @EndUserText.label: 'Discount 10%'
+  DiscountPrice;
 }
