@@ -1,0 +1,34 @@
+
+CREATE TABLE com_training_Order (
+  clientGender NVARCHAR(5000),
+  status INTEGER,
+  priority NVARCHAR(5000)
+);
+
+CREATE TABLE com_training_Course (
+  ID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE com_training_Student (
+  ID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE com_training_StudentCourse (
+  ID NVARCHAR(36) NOT NULL,
+  Student_ID NVARCHAR(36),
+  Course_ID NVARCHAR(36),
+  PRIMARY KEY(ID)
+);
+
+CREATE TABLE com_training_Orders (
+  ClientEmail NVARCHAR(65) NOT NULL,
+  FirstName NVARCHAR(30),
+  LastName NVARCHAR(30),
+  CreatedOn DATE_TEXT,
+  Reviewed BOOLEAN,
+  Approved BOOLEAN,
+  PRIMARY KEY(ClientEmail)
+);
+
