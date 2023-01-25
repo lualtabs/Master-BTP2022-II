@@ -1,6 +1,6 @@
 namespace com.training;
 
-using {cuid} from '@sap/cds/common';
+using {cuid, Country} from '@sap/cds/common';
 
 type Address {
     Street     : String;
@@ -96,4 +96,6 @@ entity Orders {
         CreatedOn   : Date;
         Reviewed    : Boolean;
         Approved    : Boolean;
+        Country     : Country;
+        Status      : String(1);
 }

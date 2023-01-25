@@ -3,19 +3,19 @@ const { Orders } = cds.entities("com.training");
 
 module.exports = (srv) => {
   //************READ******//
-  srv.on("READ", "GetOrders", async (req) => {
+  srv.on("READ", "Orders", async (req) => {
     if (req.data.ClientEmail !== undefined) {
       return await SELECT.from`com.training.Orders`
         .where`ClientEmail = ${req.data.ClientEmail}`;
     }
     return await SELECT.from(Orders);
   });
-  srv.after("READ", "GetOrders", (data) => {
+  srv.after("READ", "Orders", (data) => {
     return data.map((order) => (order.Reviewed = true));
   });
 
   //********CREATE*************//
-  srv.on("CREATE", "CreateOrder", async (req) => {
+  srv.on("CREATE", "Orders", async (req) => {
     let returnData = await cds
       .transaction(req)
       .run(
@@ -46,13 +46,13 @@ module.exports = (srv) => {
     return returnData;
   });
 
-  srv.before("CREATE", "CreateOrder", (req) => {
+  srv.before("CREATE", "Orders", (req) => {
     req.data.CreatedOn = new Date().toISOString().slice(0, 10);
     return req;
   });
 
   //********UPDATE*************//
-  srv.on("UPDATE", "UpdateOrder", async (req) => {
+  srv.on("UPDATE", "Orders", async (req) => {
     let returnData = await cds
       .transaction(req)
       .run([
@@ -77,7 +77,7 @@ module.exports = (srv) => {
   });
 
   //********DELETE*************//
-  srv.on("DELETE", "DeleteOrder", async (req) => {
+  srv.on("DELETE", "Orders", async (req) => {
     let returnData = await cds
       .transaction(req)
       .run(
@@ -99,4 +99,63 @@ module.exports = (srv) => {
     console.log("Before End", returnData);
     return await returnData;
   });
+
+  //************FUNCTIONS******/
+  srv.on("getClientTaxRate", async (req) => {
+    //NO server side-effect
+    const { clientEmail } = req.data;
+    const db = srv.transaction(req);
+
+    const results = await db
+      .read(Orders, ["Country_code"])
+      .where({ ClientEmail: clientEmail });
+
+    console.log(results[0]);
+
+    switch (results[0].Country_code) {
+      case "ES":
+        return 21.5;
+      case "UK":
+        return 24.6;
+      default:
+        return 0.0;
+    }
+  });
+
+  //************ACTIONS******/
+  srv.on("cancelOrder", async (req) => {
+    const { clientEmail } = req.data;
+    const db = srv.transaction(req);
+
+    const resultsRead = await db
+      .read(Orders, ["FirstName", "LastName", "Approved"])
+      .where({ ClientEmail: clientEmail });
+
+    let returnOrder = {
+      status: "",
+      message: ""
+    };
+
+    console.log(clientEmail);
+    console.log(resultsRead);
+
+    if (resultsRead[0].Approved == false) {
+      const resultsUpdated = await db
+        .update(Orders)
+        .set({ Status: "C" })
+        .where({ ClientEmail: clientEmail });
+      returnOrder.status = "Succeeded";
+      returnOrder.message = `The Order placed by ${resultsRead[0
+      ].FirstName} ${resultsRead[0].LastName} was canceled
+  ${resultsUpdated}`;
+    } else {
+      returnOrder.status = "Failed";
+      returnOrder.message = `The Order placed by ${resultsRead[0
+      ].FirstName} ${resultsRead[0].LastName} was NOT canceled because
+  was already approved`;
+    }
+    console.log("Action cancelOrder executed");
+    return returnOrder;
+  });
+
 };
