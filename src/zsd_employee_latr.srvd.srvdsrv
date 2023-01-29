@@ -1,0 +1,4 @@
+@EndUserText.label: 'Employee SD.'
+define service ZSD_EMPLOYEE_LATR {
+  expose ZC_EMPLOYEE_LATR as employees;
+}

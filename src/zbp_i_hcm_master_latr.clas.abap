@@ -1,0 +1,5 @@
+CLASS zbp_i_hcm_master_latr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_hcm_master_latr.
+ENDCLASS.
+
+CLASS zbp_i_hcm_master_latr IMPLEMENTATION.
+ENDCLASS.

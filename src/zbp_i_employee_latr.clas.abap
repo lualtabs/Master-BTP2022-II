@@ -1,0 +1,5 @@
+CLASS zbp_i_employee_latr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_employee_latr.
+ENDCLASS.
+
+CLASS zbp_i_employee_latr IMPLEMENTATION.
+ENDCLASS.

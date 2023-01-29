@@ -1,0 +1,125 @@
+managed; // implementation in class zbp_i_travel_latr unique;
+//strict ( 2 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for ZI_TRAVEL_LATR alias Travel
+implementation in class zcl_bp_travel_LATR unique
+persistent table ztb_travel_latr
+with additional save
+lock master
+authorization master ( instance )
+etag master LastChangedAt
+{
+  // Administrative fields: read only
+  field ( readonly ) LastChangedAt, LastChangedBy, CreatedAt, CreatedBy;
+  // Mandatory fields for travel
+  field ( mandatory : create ) AgencyId, OverallStatus, BookingFee, CurrencyCode;
+  // Dinamyc field control
+  field ( features : instance ) TravelId, OverallStatus;
+
+  create;
+  update;
+  delete;
+
+  //Instance Actions
+  action ( features : instance ) acceptTravel result [1] $self;
+  action ( features : instance ) rejectTravel result [1] $self;
+  action createTravelByTemplate result [1] $self;
+
+  //Validations
+  validation validateCustomer on save { create; field CustomerId; }
+  validation validateDates on save { create; field BeginDate, EndDate; }
+  validation validateStatus on save { create; field OverallStatus; }
+
+  association _Booking { create ( features : instance ); }
+
+  mapping for ZTB_TRAVEL_LATR
+  {
+    TravelId = travel_id;
+    AgencyId = agency_id;
+    CustomerId = customer_id;
+    BeginDate = begin_date;
+    EndDate = end_date;
+    BookingFee = booking_fee;
+    TotalPrice = total_price;
+    CurrencyCode = currency_code;
+    Description = description;
+    OverallStatus = overall_status;
+    CreatedBy = created_by;
+    CreatedAt = created_at;
+    LastChangedBy = last_changed_by;
+    LastChangedAt = last_changed_at;
+  }
+}
+
+define behavior for ZI_BOOKING_LATR alias Booking
+implementation in class zcl_bp_booking_LATR unique
+persistent table ztb_booking_latr
+lock dependent by _Travel
+authorization dependent by _Travel
+etag master LastChangedAt
+{
+  // Static fields control
+  field ( readonly ) TravelId;
+  field ( mandatory : create ) CarrierId, ConnectionId, FlightDate, BookingStatus;
+  update;
+  delete;
+
+  //Validations
+  validation validateStatus on save { create; field BookingStatus; }
+
+  //Determination
+  determination calculateTotalFlighPrice on modify { field FlightPrice; }
+
+  association _Travel;
+  association _BookingSupplement { create ( features : instance ); }
+
+  mapping for ZTB_BOOKING_LATR
+  {
+    TravelId = travel_id;
+    BookingId = booking_id;
+    CustomerId = customer_id;
+    CarrierId = carrier_id;
+    ConnectionId = connection_id;
+    FlightDate = flight_date;
+    FlightPrice = flight_price;
+    CurrencyCode = currency_code;
+    BookingStatus = booking_status;
+    LastChangedAt = last_changed_at;
+  }
+}
+
+
+define behavior for ZI_BOOKSUPPL_LATR alias Supplement
+implementation in class zcl_bp_supplement_LATR unique
+with unmanaged save
+lock dependent by _Travel
+authorization dependent by _Travel
+etag master LastchangeAt
+{
+  // Static fields control
+  field ( mandatory : create ) SupplementId, Price;
+  field ( readonly ) TravelId, BookingId;
+
+
+  mapping for ztb_log_latr corresponding;
+  mapping for ztb_booksup_latr
+  {
+    TravelId = travel_id;
+    BookingId = booking_id;
+    BookingSupplementId = booking_supplement_id;
+    SupplementId = supplement_id;
+    Price = price;
+    CurrencyCode = currency_code;
+    LastchangeAt = last_changed_at;
+  }
+
+  update;
+  delete;
+
+  association _Travel;
+  association _Booking;
+
+  //Determination
+  determination calculateTotaSupplimPrice on modify { field Price, CurrencyCode; }
+
+}

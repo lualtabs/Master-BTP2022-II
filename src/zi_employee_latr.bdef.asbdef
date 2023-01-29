@@ -1,0 +1,16 @@
+managed implementation in class zbp_i_employee_latr unique;
+with draft;
+//strict ( 1 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for ZI_EMPLOYEE_LATR alias employee
+    persistent table ZTB_EMPLOY_LATR
+    draft table ZTB_EMPLOyD_LATR
+lock master
+total etag lchg_date_time
+etag master lchg_date_time
+{
+  field( readonly, numbering : managed ) e_number;
+  create;
+  update;
+  delete;
+}

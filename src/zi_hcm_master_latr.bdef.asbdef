@@ -1,0 +1,8 @@
+unmanaged implementation in class zbp_i_hcm_master_latr unique;
+
+define behavior for ZI_HCM_MASTER_LATR alias HCMMaster
+{
+  create;
+  update;
+  delete;
+}

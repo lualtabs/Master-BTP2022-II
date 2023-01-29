@@ -1,0 +1,5 @@
+CLASS zcl_bp_supplement_latr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_travel_latr.
+ENDCLASS.
+
+CLASS zcl_bp_supplement_latr IMPLEMENTATION.
+ENDCLASS.

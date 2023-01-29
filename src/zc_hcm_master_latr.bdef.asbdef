@@ -1,0 +1,8 @@
+projection;
+
+define behavior for ZC_HCM_MASTER_LATR alias HCMMaster
+{
+  use create;
+  use update;
+  use delete;
+}

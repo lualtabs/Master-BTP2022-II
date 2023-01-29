@@ -1,0 +1,4 @@
+@EndUserText.label: 'HCM - Master Service Def.'
+define service ZSD_HCM_MASTER_LATR {
+  expose ZC_HCM_MASTER_LATR;
+}
