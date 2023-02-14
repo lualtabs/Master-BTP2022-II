@@ -1,0 +1,35 @@
+managed; //implementation in class zbp_i_headerso_latr unique;
+//strict ( 1 ); //Uncomment this line in order to enable strict mode 2. The strict mode has two variants (strict(1), strict(2)) and is prerequisite to be future proof regarding syntax and to be able to release your BO.
+
+define behavior for zi_headerso_latr alias Header
+implementation in class zcl_headerso_latr unique
+persistent table zheaderso_latr
+lock master
+authorization master ( instance )
+//etag master Createon
+
+{
+  //Mandatory fields are requeried
+  field ( mandatory ) Id, Email;
+  //dynamic field control
+  field ( features : instance ) Id;
+  create;
+  update;
+  delete;
+  association _Items { create; }
+  mapping for zheaderso_latr corresponding;
+}
+
+define behavior for zi_itemsso_latr alias Items
+implementation in class zcl_itemsso_latr unique
+persistent table zitemsso_latr
+lock dependent by _Header
+authorization dependent by _Header
+//etag master releasedate
+{
+  update;
+  delete;
+  field ( readonly ) Id;
+  association _Header;
+  mapping for zitemsso_latr corresponding;
+}

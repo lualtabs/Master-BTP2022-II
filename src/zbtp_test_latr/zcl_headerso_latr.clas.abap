@@ -1,0 +1,5 @@
+CLASS zcl_headerso_latr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_headerso_latr.
+ENDCLASS.
+
+CLASS zcl_headerso_latr IMPLEMENTATION.
+ENDCLASS.

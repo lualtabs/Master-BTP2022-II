@@ -1,0 +1,82 @@
+@Metadata.layer: #CORE
+@Search.searchable: true
+@UI:{
+    headerInfo: {
+    typeName: 'Item Sale order',
+    typeNamePlural: 'Items Sales order',
+    title: {
+        type: #STANDARD,
+        label: 'Items SO.',
+        value: 'Id'
+    }
+}}
+annotate view zc_itemsso_latr with
+{
+
+  @UI.facet: [{
+  id: 'ItemsID',
+  purpose: #STANDARD,
+  type: #IDENTIFICATION_REFERENCE,
+  label: 'Item Sale Order',
+  position: 10 }]
+  @Search.defaultSearchElement: true
+  Id;
+
+  @UI: {
+  lineItem: [ { position: 20, importance: #HIGH } ],
+  identification: [ { position: 20, label: 'Nombre' } ] }
+  @Search.defaultSearchElement: true
+  Name;
+
+  @UI: { lineItem: [ { position: 30, importance: #HIGH } ],
+  identification: [ { position: 30, label: 'Descripción' } ] }
+  @Search.defaultSearchElement: true
+  Description;
+
+  @UI: { lineItem: [ { position: 40, importance: #HIGH } ],
+  identification: [ { position: 40, label: 'Fecha activación' } ] }
+  @Search.defaultSearchElement: true
+  Releasedate;
+
+  @UI: {
+  lineItem: [ { position: 50, importance: #HIGH } ],
+  identification: [ { position: 50 } ] }
+  @Search.defaultSearchElement: true
+  Discontinueddate;
+
+  @UI:
+  { lineItem: [ { position: 60, importance: #HIGH } ],
+  identification: [ { position: 60, label: 'Precio' } ] }
+  Price;
+
+  @UI: {
+  lineItem: [ { position: 70, importance: #HIGH } ],
+  identification: [ { position: 70, label: 'Altura' } ] }
+  @Search.defaultSearchElement: true
+  Height;
+
+  @UI: {
+  lineItem: [ { position: 80, importance: #HIGH } ],
+  identification: [ { position: 80 } ] }
+  @Search.defaultSearchElement: true
+  Width;
+
+  @UI:
+  { lineItem: [ { position: 90, importance: #HIGH } ],
+    identification: [ { position: 90, label: 'Profundidad' } ] }
+  @Search.defaultSearchElement: true
+  Depth;
+
+  @UI:
+  { lineItem: [ { position: 100, importance: #HIGH } ],
+    identification: [ { position: 100, label: 'Cantidad' } ] }
+  @Search.defaultSearchElement: true
+  Quantity;
+
+  @UI:
+  { lineItem: [ { position: 110, importance: #HIGH } ],
+  identification: [ { position: 110, label:'Unidad de medida' } ] }
+  @Consumption.valueHelpDefinition: [{ entity : {name: 'I_UnitOfMeasure', element: 'UnitOfMeasure' } }]
+  @Search.defaultSearchElement: true
+  Unitofmeasure;
+}

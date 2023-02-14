@@ -1,0 +1,5 @@
+@EndUserText.label: 'Service Definitions Header Sales orders'
+define service ZSD_HEADERSO_LATR {
+  expose zc_headerso_latr as Header;
+  expose zc_itemsso_latr as Items;
+}

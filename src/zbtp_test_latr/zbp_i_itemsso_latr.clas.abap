@@ -1,0 +1,5 @@
+CLASS zbp_i_itemsso_latr DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_headerso_latr.
+ENDCLASS.
+
+CLASS zbp_i_itemsso_latr IMPLEMENTATION.
+ENDCLASS.
